@@ -85,7 +85,7 @@ public class Main {
 //                            System.out.println("*************************************************\n");
                             row=size;
                             do {
-                               if (row>n) {
+                               if (row > n) {
                                        int overValuse = row - n;
                                        row = row - overValuse;
                                        tempRow = row - (row % size);
@@ -98,6 +98,10 @@ public class Main {
                                    row=n;
                                    tempRow=0;
                                }
+                               if(row==tempRow){
+                                   tempRow = row-size;
+                               }
+
                                 Table t = new Table(4, BorderStyle.UNICODE_BOX_DOUBLE_BORDER, ShownBorders.ALL);
                                 t.setColumnWidth(0, 10, 26);
                                 t.setColumnWidth(1, 20, 26);
@@ -151,9 +155,9 @@ public class Main {
                                             checkAgain=true;
                                         break;
                                     case "2":
-                                        if(n>3) {
-                                            row = row + size;
-                                            tempRow = row - size;
+                                        if(n>size) {
+                                                row = row + size;
+                                                tempRow = row - size;
                                         }else{
                                             row=size;
                                             tempRow=0;
@@ -197,9 +201,6 @@ public class Main {
                                         }while (checkAgain);
                                         busId=Integer.parseInt(numberString);
 
-//                                        System.out.println("\n\n*************************************************");
-//                                        System.out.println("***===      Display All Seat in Bus "+busId+"   ===***");
-//                                        System.out.println("*************************************************\n");
                                         Table t1 = new Table(4, BorderStyle.UNICODE_BOX_DOUBLE_BORDER, ShownBorders.ALL);
                                         t1.setColumnWidth(0, 20, 26);
                                         t1.setColumnWidth(1, 20, 26);
@@ -263,16 +264,20 @@ public class Main {
                                 if(busArray[busId-1][i].equals("+")) {
                                     t2.addCell(GREEN+"( "+busArray[busId - 1][i]+" ) "+(i + 1)+RESET, numberStyle);
 //                                    System.out.printf(GREEN+"\t%-10s ", "(" + busArray[busId - 1][i] + ")" + (i + 1)+RESET);
+                                    available = available + 1;
                                 }else{
                                     t2.addCell(RED+"( "+busArray[busId - 1][i]+" ) "+(i + 1)+RESET, numberStyle);
 //                                    System.out.printf(RED+"\t%-10s ", "(" + busArray[busId - 1][i] + ")" + (i + 1)+RESET);
+                                    unavailable = unavailable + 1;
                                 }
 //                                if((i+1)%4 == 0){
 //                                    System.out.println("\n");
 //                                }
                             }
                             System.out.println(t2.render());
-                            System.out.println("\n\t\t\t\t"+GREEN+"( + ) : Available ( "+availableByBus[busId-1]+" )"+RESET+"\t\t\t\t"+RED+"( - ) : Unavailable ( "+unAvailableByBus[busId-1]+" )"+RESET);
+                            System.out.println("\n\t\t\t\t"+GREEN+"( + ) : Available ( "+available+" )"+RESET+"\t\t\t\t"+RED+"( - ) : Unavailable ( "+unavailable+" )"+RESET);
+                            unavailable=0;
+                            available=0;
                             do {
                                 do {
                                     System.out.print("-> Enter seat number to booking: ");
@@ -358,16 +363,20 @@ public class Main {
                                 if(busArray[busId-1][i].equals("+")) {
 //                                    System.out.printf(GREEN+"\t%-10s ", "(" + busArray[busId - 1][i] + ")" + (i + 1)+RESET);
                                     t3.addCell(GREEN+"( "+busArray[busId - 1][i]+" ) "+(i + 1)+RESET, numberStyle);
+                                    available = available + 1;
                                 }else{
 //                                    System.out.printf(RED+"\t%-10s ", "(" + busArray[busId - 1][i] + ")" + (i + 1)+RESET);
                                     t3.addCell(RED+"( "+busArray[busId - 1][i]+" ) "+(i + 1)+RESET, numberStyle);
+                                    unavailable = unavailable + 1;
                                 }
 //                                if((i+1)%4 == 0){
 //                                    System.out.println("\n");
 //                                }
                             }
                             System.out.println(t3.render());
-                            System.out.println("\n\t\t\t\t"+GREEN+"( + ) : Available ( "+availableByBus[busId-1]+" )"+RESET+"\t\t\t\t"+RED+"( - ) : Unavailable ( "+unAvailableByBus[busId-1]+" )"+RESET);
+                            System.out.println("\n\t\t\t\t"+GREEN+"( + ) : Available ( "+available+" )"+RESET+"\t\t\t\t"+RED+"( - ) : Unavailable ( "+unavailable+" )"+RESET);
+                            available=0;
+                            unavailable=0;
                             do {
                                 System.out.print("-> Enter seat number to cancel booking: ");
                                 numberString = scanner.nextLine();
